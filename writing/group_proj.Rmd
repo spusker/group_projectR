@@ -28,7 +28,7 @@ library(viridis)
 library(tidyverse)
 
 
-nyc_squirrels <- read_csv("/Users/steph/Downloads/group_projectR/data/nyc_squirrels.csv")
+nyc_squirrels <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
 
 nyc_squirrels_clean <- nyc_squirrels %>% 
   select(long, lat, unique_squirrel_id, hectare, date, hectare_squirrel_number,
