@@ -68,8 +68,51 @@ primary_fur_color <- nyc_squirrels_clean %>%
   group_by(primary_fur_color) %>% 
   summarize(count = n())
 
-df <- nyc_squirrels_clean %>%
+running <- nyc_squirrels_clean %>%
   group_by(running) %>% 
+  summarize(count = n())
+
+table_activities <- nyc_squirrels_clean %>% 
+  tibble()
+  
+chasing <- nyc_squirrels_clean %>%
+  group_by(chasing) %>% 
+  summarize(count = n())
+
+climbing <- nyc_squirrels_clean %>%
+  group_by(climbing) %>% 
+  summarize(count = n())
+
+eating <- nyc_squirrels_clean %>%
+  group_by(eating) %>% 
+  summarize(count = n())
+
+kuks <- nyc_squirrels_clean %>%
+  group_by(kuks) %>% 
+  summarize(count = n())
+
+quaas <- nyc_squirrels_clean %>%
+  group_by(quaas) %>% 
+  summarize(count = n())
+
+moans <- nyc_squirrels_clean %>%
+  group_by(moans) %>% 
+  summarize(count = n())
+
+tail_flags <- nyc_squirrels_clean %>%
+  group_by(tail_flags) %>% 
+  summarize(count = n())
+
+tail_twitches <- nyc_squirrels_clean %>%
+  group_by(tail_twitches) %>% 
+  summarize(count = n())
+
+indifferent <- nyc_squirrels_clean %>%
+  group_by(indifferent) %>% 
+  summarize(count = n())
+
+runs_from <- nyc_squirrels_clean %>%
+  group_by(runs_from) %>% 
   summarize(count = n())
 
 ```
@@ -77,6 +120,8 @@ df <- nyc_squirrels_clean %>%
 ### Plot
 
 ```{r, plot}
+
+
 
 ```
 
