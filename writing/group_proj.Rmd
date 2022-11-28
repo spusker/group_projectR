@@ -50,21 +50,11 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 ```{r, map with tigris}
 
 # leaflet map for central park
-fur_color <- colorFactor(c("Black","Brown","Gray"),
-                               domain = nyc_squirrels_clean$primary_fur_color)
-
- leaflet() %>% 
+leaflet() %>% 
   addTiles() %>% 
   fitBounds(-73.9823592,40.7636484,-73.9492441, 40.8005539)%>%
-  addTiles() %>% 
-  addCircleMarkers(nyc_squirrels_clean$long, 
-                   nyc_squirrels_clean$lat, 
-                   color = fur_color(nyc_squirrels_clean$primary_fur_color), 
-                   radius = 0.5, 
-                   fill = T,
-                   fillOpacity = 0.2,
-                   opacity = 0.6,
-                   popup = nyc_squirrels_clean$primary_fur_color)
+  
+
 
   
 
@@ -137,7 +127,28 @@ runs_from <- nyc_squirrels_clean %>%
 ### Plot
 
 ```{r, table 2}
->>>>>>> 664ee248c917cfb2c47b3bf36f6efdbd408e7eec
+
+fur_color <- colorFactor(c("Black","Brown","Gray"),
+                               domain = nyc_squirrels_clean$primary_fur_color)
+
+ leaflet() %>% 
+  addTiles() %>% 
+  fitBounds(-73.9823592,40.7636484,-73.9492441, 40.8005539)%>%
+  addTiles() %>% 
+  addCircleMarkers(nyc_squirrels_clean$long, 
+                   nyc_squirrels_clean$lat, 
+                   color = fur_color(nyc_squirrels_clean$primary_fur_color), 
+                   radius = 0.5, 
+                   fill = T,
+                   fillOpacity = 0.5,
+                   opacity = 1,
+                   popup = paste(nyc_squirrels_clean$unique_squirrel_id,
+                                 nyc_squirrels_clean$primary_fur_color,
+                                 sep = ","))%>%
+   addLegend("bottomright", pal = fur_color, 
+             values = nyc_squirrels_clean$primary_fur_color,
+             title = "primary fur color")
+    
 
 ```
 
