@@ -59,7 +59,9 @@ central_park <- metro_divisions(class = "sf") %>%
  
 ```
 
-```{r, tables}
+Row {}
+-----------------------------------------------------------------------
+```{r, table 1}
 primary_fur_color <- nyc_squirrels_clean %>%
   group_by(primary_fur_color) %>% 
   summarize(count = n())
@@ -71,6 +73,7 @@ df <- nyc_squirrels_clean %>%
 
 ```
 
+Row{}
 -----------------------------------------------------------------------
 ```{r, chunk for table 2}
 
