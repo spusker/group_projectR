@@ -59,9 +59,12 @@ central_park <- metro_divisions(class = "sf") %>%
  
 ```
 
-Row {}
+Row {.tabset .tabset-fade}
 -----------------------------------------------------------------------
-```{r, table 1}
+```{r, table 1 and 2 tabs}
+
+## Table 1
+
 primary_fur_color <- nyc_squirrels_clean %>%
   group_by(primary_fur_color) %>% 
   summarize(count = n())
@@ -71,12 +74,9 @@ df <- nyc_squirrels_clean %>%
   summarize(count = n())
 
 
-```
 
-Row{}
------------------------------------------------------------------------
-```{r, chunk for table 2}
-
+## Chart/table 2
 
 ```
+
 
