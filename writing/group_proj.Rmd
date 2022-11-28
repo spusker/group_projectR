@@ -4,7 +4,7 @@ author: "Stephanie Pusker"
 date: "2022-11-16"
 output: 
   flexdashboard::flex_dashboard:
-    orientation: rows
+     storyboard: true
 ---
 
 ```{r setup, include=FALSE}
@@ -44,8 +44,6 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 
 ```
 
-Row {data-width=650, data-height=200}
------------------------------------------------------------------------
 ```{r, map with tigris}
 
 central_park <- metro_divisions(class = "sf") %>% 
@@ -59,9 +57,7 @@ central_park <- metro_divisions(class = "sf") %>%
  
 ```
 
-Row {.tabset .tabset-fade}
------------------------------------------------------------------------
-```{r, table 1 and 2 tabs}
+```{r, table 1}
 
 ## Table 1
 
@@ -73,10 +69,9 @@ df <- nyc_squirrels_clean %>%
   group_by(running) %>% 
   summarize(count = n())
 
-
-
-## Chart/table 2
-
 ```
 
+```{r, table 2}
+
+```
 
