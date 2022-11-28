@@ -11,7 +11,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
 ```
 
-```{r, package loading and data cleaning}
+```{r, include = FALSE}
 library(flexdashboard)
 library(readr)
 library(lubridate)
@@ -48,9 +48,6 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 ### Interactive Map
 
 ```{r, map with tigris}
-
-central_park <- metro_divisions(class = "sf") %>% 
-  filter(NAME == "New York-Jersey City-White Plains, NY-NJ")
 
 # leaflet map for central park
  leaflet() %>% 
