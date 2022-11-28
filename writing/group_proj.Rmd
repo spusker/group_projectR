@@ -48,6 +48,20 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 
 central_park <- metro_divisions(class = "sf") %>% 
   filter(NAME == "New York-Jersey City-White Plains, NY-NJ")
-g
+
+
+# leaflet map for central park
+ leaflet() %>% 
+  addTiles() %>% 
+  fitBounds(-73.9823592,40.7636484,-73.9492441, 40.800553)
+ 
+```
+
+```{r, tables}
+primary_fur_color <- nyc_squirrels_clean %>%
+  group_by(primary_fur_color) %>% 
+  summarize(count = n())
+
+  
 ```
 
