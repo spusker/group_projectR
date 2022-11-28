@@ -2,7 +2,9 @@
 title: "group_project"
 author: "Stephanie Pusker"
 date: "2022-11-16"
-output: html_document
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
 ---
 
 ```{r setup, include=FALSE}
@@ -49,11 +51,11 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 central_park <- metro_divisions(class = "sf") %>% 
   filter(NAME == "New York-Jersey City-White Plains, NY-NJ")
 
-
 # leaflet map for central park
  leaflet() %>% 
   addTiles() %>% 
   fitBounds(-73.9823592,40.7636484,-73.9492441, 40.800553)
+
  
 ```
 
@@ -62,6 +64,10 @@ primary_fur_color <- nyc_squirrels_clean %>%
   group_by(primary_fur_color) %>% 
   summarize(count = n())
 
-  
+df <- nyc_squirrels_clean %>%
+  group_by(running) %>% 
+  summarize(count = n())
+
+
 ```
 
