@@ -63,7 +63,8 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
                    radius = 0.5, 
                    fill = T,
                    fillOpacity = 0.2,
-                   opacity = 0.6)
+                   opacity = 0.6,
+                   popup = nyc_squirrels_clean$primary_fur_color)
 
   
 
