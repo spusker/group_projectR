@@ -60,7 +60,7 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 
 ### Table 
 
-```{r, table 1}
+```{r, table}
 
 ## Table 1
 
@@ -76,7 +76,7 @@ df <- nyc_squirrels_clean %>%
 
 ### Plot
 
-```{r, table 2}
+```{r, plot}
 
 ```
 
