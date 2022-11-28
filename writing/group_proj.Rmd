@@ -52,7 +52,7 @@ central_park <- metro_divisions(class = "sf") %>%
 # leaflet map for central park
  leaflet() %>% 
   addTiles() %>% 
-  fitBounds(-73.9823592,40.7636484,-73.9492441, 40.8005539)
+  fitBounds(-73.9823592,40.7636484,-73.9492441, 40.800553)
 
 ```
 
