@@ -44,6 +44,9 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 
 ```
 
+
+### Interactive Map
+
 ```{r, map with tigris}
 
 central_park <- metro_divisions(class = "sf") %>% 
@@ -56,6 +59,9 @@ central_park <- metro_divisions(class = "sf") %>%
 
  
 ```
+
+
+### Table 
 
 ```{r, table 1}
 
@@ -70,6 +76,8 @@ df <- nyc_squirrels_clean %>%
   summarize(count = n())
 
 ```
+
+### Plot
 
 ```{r, table 2}
 
