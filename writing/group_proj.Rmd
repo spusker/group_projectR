@@ -44,8 +44,8 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 
 ```
 
-
-
+Row {}
+-----------------------------------------------------------------------
 ```{r, map with tigris}
 
 central_park <- metro_divisions(class = "sf") %>% 
@@ -59,6 +59,11 @@ central_park <- metro_divisions(class = "sf") %>%
   addTiles() %>% 
   fitBounds(-73.9823592,40.7636484,-73.9492441, 40.800553)
 
+
+```
+
+-----------------------------------------------------------------------
+```{r, chunk for table 2}
 
 ```
 
