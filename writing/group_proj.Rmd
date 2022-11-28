@@ -44,7 +44,7 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 
 ```
 
-Row {}
+Row {data-width=650, data-height=200}
 -----------------------------------------------------------------------
 ```{r, map with tigris}
 
@@ -76,6 +76,7 @@ df <- nyc_squirrels_clean %>%
 Row{}
 -----------------------------------------------------------------------
 ```{r, chunk for table 2}
+
 
 ```
 
