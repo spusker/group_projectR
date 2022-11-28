@@ -4,14 +4,14 @@ author: "Stephanie Pusker"
 date: "2022-11-16"
 output: 
   flexdashboard::flex_dashboard:
-    orientation: rows
+     storyboard: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
 ```
 
-```{r, package loading and data cleaning}
+```{r, include = FALSE}
 library(flexdashboard)
 library(readr)
 library(lubridate)
@@ -45,11 +45,9 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 ```
 
 
+### Interactive Map
 
 ```{r, map with tigris}
-
-central_park <- metro_divisions(class = "sf") %>% 
-  filter(NAME == "New York-Jersey City-White Plains, NY-NJ")
 
 # leaflet map for central park
  leaflet() %>% 
@@ -59,7 +57,13 @@ central_park <- metro_divisions(class = "sf") %>%
  
 ```
 
-```{r, tables}
+
+### Table 
+
+```{r, table 1}
+
+## Table 1
+
 primary_fur_color <- nyc_squirrels_clean %>%
   group_by(primary_fur_color) %>% 
   summarize(count = n())
@@ -68,6 +72,7 @@ running <- nyc_squirrels_clean %>%
   group_by(running) %>% 
   summarize(count = n())
 
+<<<<<<< HEAD
 chasing <- nyc_squirrels_clean %>%
   group_by(chasing) %>% 
   summarize(count = n())
@@ -112,6 +117,13 @@ runs_from <- nyc_squirrels_clean %>%
 
 
 
+=======
+```
+
+### Plot
+
+```{r, table 2}
+>>>>>>> 664ee248c917cfb2c47b3bf36f6efdbd408e7eec
 
 ```
 
