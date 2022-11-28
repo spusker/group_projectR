@@ -52,17 +52,21 @@ central_park <- metro_divisions(class = "sf") %>%
   filter(NAME == "New York-Jersey City-White Plains, NY-NJ")
 
 # leaflet map for central park
+fur_color <- colorFactor(c("Black","Brown","Gray"),
+                               domain = nyc_squirrels_clean$primary_fur_color)
+
  leaflet() %>% 
   addTiles() %>% 
   fitBounds(-73.9823592,40.7636484,-73.9492441, 40.8005539)%>%
   addTiles() %>% 
   addCircleMarkers(nyc_squirrels_clean$long, 
                    nyc_squirrels_clean$lat, 
-                   color = nyc_squirrels_clean$primary_fur_color, 
+                   color = fur_color(nyc_squirrels_clean$primary_fur_color), 
                    radius = 0.5, 
                    fill = T,
                    fillOpacity = 0.2,
                    opacity = 0.6)
+
   
 
  
