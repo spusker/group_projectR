@@ -81,10 +81,14 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
 df_table <- nyc_squirrels_clean %>% 
   select(running, chasing,climbing, eating, foraging, kuks, quaas, moans, tail_flags, tail_twitches, indifferent, runs_from)
 
-df_table_2 <- df_table %>% 
-  pivot_longer(-running, names_to = "activity", values_to = "true_false")
+df_table_2 <- df_table %>%
+  as.data.frame() %>% 
+  pivot_longer(names_to = "activity", values_to = "true_false")
 
-
+fur_color_activity <- nyc_squirrels_clean %>%
+  select(primary_fur_color, running)
+  group_by(primary_fur_color) %>% 
+  summarize(count = n())
 
   
 chasing <- nyc_squirrels_clean %>%
