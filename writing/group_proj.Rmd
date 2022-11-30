@@ -29,7 +29,8 @@ library(ggthemes)
 library(viridis)
 library(tidyverse)
 library(tigris)
-
+library(igraph)
+library(visNetwork)
 
 nyc_squirrels <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
 
@@ -85,12 +86,14 @@ df_table_2 <- df_table %>%
   rownames_to_column(var = "ID") %>% 
   as.data.frame() %>% 
   pivot_longer(cols = running:runs_from, names_to = "activity",
-               values_to = "true_false") 
-  
-summary <- df_table_2 %>% 
-  group_by(activity)
-
-summary$proportion <- mean(summary$true_false)
+               values_to = "true_false") %>% 
+  group_by(activity) %>% 
+  nest() %>% 
+  mutate(proportion = map(data, ~ .x %>% 
+                            pull("true_false") %>% 
+                            mean())) %>% 
+  unnest(proportion) %>% 
+  mutate(percentage = 100*proportion)
 
 ```
 
@@ -100,5 +103,25 @@ summary$proportion <- mean(summary$true_false)
 
 
 
+```
+
+
+### Network
+
+```{r}
+nodes <- nyc_squirrels_clean %>% 
+  select(unique_squirrel_id)
+
+color <- nyc_squirrels_clean %>% 
+  mutate(new_column = fct_reorder(.f = unique_squirrel_id, .x = hectare))
+
+color_2 <- transform(color, new_column = sample(new_column))
+
+color_2 <- color_2 %>% 
+  select(unique_squirrel_id, new_column)
+
+network_data <- graph_from_data_frame(d = links,
+                                      directed = TRUE,
+                                      vertices = nodes)
 ```
 
