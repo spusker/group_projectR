@@ -85,7 +85,10 @@ df_table_2 <- df_table %>%
   as.data.frame() %>% 
   pivot_longer(names_to = "activity", values_to = "true_false")
 
-
+fur_color_activity <- nyc_squirrels_clean %>%
+  select(primary_fur_color, running)
+  group_by(primary_fur_color) %>% 
+  summarize(count = n())
 
 running <- nyc_squirrels_clean %>%
   group_by(running) %>% 
