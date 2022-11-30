@@ -82,60 +82,15 @@ df_table <- nyc_squirrels_clean %>%
   select(running, chasing,climbing, eating, foraging, kuks, quaas, moans, tail_flags, tail_twitches, indifferent, runs_from)
 
 df_table_2 <- df_table %>%
+  rownames_to_column(var = "ID") %>% 
   as.data.frame() %>% 
-  pivot_longer(names_to = "activity", values_to = "true_false")
-
-fur_color_activity <- nyc_squirrels_clean %>%
-  select(primary_fur_color, running)
-  group_by(primary_fur_color) %>% 
-  summarize(count = n())
-
-running <- nyc_squirrels_clean %>%
-  group_by(running) %>% 
-  summarize(count = n()) %>% 
-  ungroup() %>% 
-  group_by(chasing) %>% 
-  summarize(count = n())
+  pivot_longer(cols = running:runs_from, names_to = "activity",
+               values_to = "true_false") 
   
-chasing <- nyc_squirrels_clean %>%
-  group_by(chasing) %>% 
-  summarize(count = n())
+summary <- df_table_2 %>% 
+  group_by(activity)
 
-climbing <- nyc_squirrels_clean %>%
-  group_by(climbing) %>% 
-  summarize(count = n())
-
-eating <- nyc_squirrels_clean %>%
-  group_by(eating) %>% 
-  summarize(count = n())
-
-kuks <- nyc_squirrels_clean %>%
-  group_by(kuks) %>% 
-  summarize(count = n())
-
-quaas <- nyc_squirrels_clean %>%
-  group_by(quaas) %>% 
-  summarize(count = n())
-
-moans <- nyc_squirrels_clean %>%
-  group_by(moans) %>% 
-  summarize(count = n())
-
-tail_flags <- nyc_squirrels_clean %>%
-  group_by(tail_flags) %>% 
-  summarize(count = n())
-
-tail_twitches <- nyc_squirrels_clean %>%
-  group_by(tail_twitches) %>% 
-  summarize(count = n())
-
-indifferent <- nyc_squirrels_clean %>%
-  group_by(indifferent) %>% 
-  summarize(count = n())
-
-runs_from <- nyc_squirrels_clean %>%
-  group_by(runs_from) %>% 
-  summarize(count = n())
+summary$proportion <- mean(summary$true_false)
 
 ```
 
