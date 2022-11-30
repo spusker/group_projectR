@@ -47,7 +47,7 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 
 ### Interactive Map
 
-```{r, map with tigris}
+```{r, echo = FALSE}
 
 # leaflet map for central park
 fur_color <- colorFactor(c("Black","Brown","Gray"),
@@ -86,12 +86,6 @@ df_table_2 <- df_table %>%
 
 
 
-running <- nyc_squirrels_clean %>%
-  group_by(running) %>% 
-  summarize(count = n()) %>% 
-  ungroup() %>% 
-  group_by(chasing) %>% 
-  summarize(count = n())
   
 chasing <- nyc_squirrels_clean %>%
   group_by(chasing) %>% 
