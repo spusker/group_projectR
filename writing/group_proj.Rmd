@@ -74,7 +74,7 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
 
 ### Table 
 
-```{r, table 1}
+```{r, table}
 
 ## Table 1
 
@@ -96,7 +96,7 @@ running <- nyc_squirrels_clean %>%
   ungroup() %>% 
   group_by(chasing) %>% 
   summarize(count = n())
-
+  
 chasing <- nyc_squirrels_clean %>%
   group_by(chasing) %>% 
   summarize(count = n())
@@ -141,8 +141,9 @@ runs_from <- nyc_squirrels_clean %>%
 
 ### Plot
 
-```{r, table 2}
->>>>>>> 664ee248c917cfb2c47b3bf36f6efdbd408e7eec
+```{r, plot}
+
+
 
 ```
 
