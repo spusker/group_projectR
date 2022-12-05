@@ -98,6 +98,7 @@ activity_percentages <- nyc_squirrels_clean %>%
          tail_flags, tail_twitches, indifferent, runs_from) %>% 
   rownames_to_column(var = "ID") %>% 
   as.data.frame() %>%
+  as.data.frame() %>% 
   pivot_longer(cols = running:runs_from, names_to = "activity",
                values_to = "true_false") %>% 
   group_by(activity) %>% 
@@ -129,6 +130,14 @@ ggplot(aes(x = percentage,
 
 
 girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
+
+```
+
+## Something
+
+```{r}
+
+
 
 ```
 
