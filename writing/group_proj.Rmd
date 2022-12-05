@@ -1,10 +1,10 @@
 ---
 title: "Group Project"
 author: "Stephanie Pusker, Mohamed Alhassan, Haiyang Hu"
-date: "2022-11-16"
+date: "2022-12-14"
 output: 
   flexdashboard::flex_dashboard:
-     storyboard: true
+    storyboard: TRUE
 ---
 
 ```{r setup, include = FALSE}
@@ -51,8 +51,7 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 
 ```
 
-### Interactive Map: individual squirrel points by color in central park
-
+### Interactive Map: individual squirrel points by color in central park 
 ```{r, echo = FALSE}
 
 nyc_squirrels_clean_test <- nyc_squirrels_clean %>%
