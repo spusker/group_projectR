@@ -55,11 +55,6 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 
 ```{r, table 2}
 
-# leaflet map for central park
-leaflet() %>% 
-  addTiles() %>% 
-  fitBounds(-73.9823592,40.7636484,-73.9492441, 40.8005539)%>%
-
 nyc_squirrels_clean_test <- nyc_squirrels_clean %>%
   mutate(label = primary_fur_color)%>%
   mutate(label = fct_recode(label))
