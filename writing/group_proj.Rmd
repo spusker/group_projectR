@@ -51,27 +51,49 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 
 ```
 
+### Interactive Plot
 
-### Interactive Map
-
-```{r, echo = FALSE}
+```{r, table 2}
 
 # leaflet map for central park
 leaflet() %>% 
   addTiles() %>% 
   fitBounds(-73.9823592,40.7636484,-73.9492441, 40.8005539)%>%
-  
+
+nyc_squirrels_clean_test <- nyc_squirrels_clean %>%
+  mutate(label = primary_fur_color)%>%
+  mutate(label = fct_recode(label))
+  "https://inaturalist-open-data.s3.amazonaws.com/photos/176023507/original.jpeg" = "Gray",             "https://cms.prod.nypr.digital/images/329566/fill-1200x800%7Cformat-jpeg%7Cjpegquality-85" =   "Black",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQub0O9b_HAjJjvFaz-w_d9sE6hsJLcRjadJfipfXv5udR5hPsKjsFcgXiKtxohSpQXB8I&usqp=CAU" = "Cinnamon"))
 
 
-  
+fur_color <- colorFactor(c("Black","Brown","Gray"),
+                               domain = nyc_squirrels_clean$primary_fur_color)
 
- 
-```
+ leaflet() %>% 
+  addTiles() %>% 
+  fitBounds(-73.9823592,40.7636484,-73.9492441, 40.8005539)%>%
+  addTiles() %>% 
+  addCircleMarkers(nyc_squirrels_clean$long, 
+                   nyc_squirrels_clean$lat, 
+                   color = fur_color(nyc_squirrels_clean$primary_fur_color), 
+                   radius = 0.5, 
+                   fill = T,
+                   fillOpacity = 0.5,
+                   opacity = 1,
+                   popup = 
+               paste('<img src="', nyc_squirrels_clean_test$label, '" alt="these be unis" width="75"><br>',
+                     "<b>ID:</b>",nyc_squirrels_clean$unique_squirrel_id,"<br/>",
+                     "<b>Color:</b>",nyc_squirrels_clean$primary_fur_color,"<br/>"))%>%
+   addLegend("bottomright", pal = fur_color,
+                         values = nyc_squirrels_clean$primary_fur_color,
+                         title = "Primary fur color")
+                   
+```    
 
 
-### Table 
 
-```{r, table}
+```{r, plot}
 
 ## Table 1
 
@@ -103,47 +125,6 @@ fur_color_activity <- nyc_squirrels_clean %>%
          percentage = round(percentage, 2),
          tooltip_text = paste0(toupper(activity), "\n", 
                    percentage, "%"))
-  
-```
-
-### Plot
-
-```{r, table 2}
-nyc_squirrels_clean_test <- nyc_squirrels_clean %>%
-  mutate(label = primary_fur_color)%>%
-  mutate(label = fct_recode(label))
-                            "https://inaturalist-open-data.s3.amazonaws.com/photos/176023507/original.jpeg" = "Gray",
-                            "https://cms.prod.nypr.digital/images/329566/fill-1200x800%7Cformat-jpeg%7Cjpegquality-85" = "Black",
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQub0O9b_HAjJjvFaz-w_d9sE6hsJLcRjadJfipfXv5udR5hPsKjsFcgXiKtxohSpQXB8I&usqp=CAU" = "Cinnamon"))
-
-
-fur_color <- colorFactor(c("Black","Brown","Gray"),
-                               domain = nyc_squirrels_clean$primary_fur_color)
-
- leaflet() %>% 
-  addTiles() %>% 
-  fitBounds(-73.9823592,40.7636484,-73.9492441, 40.8005539)%>%
-  addTiles() %>% 
-  addCircleMarkers(nyc_squirrels_clean$long, 
-                   nyc_squirrels_clean$lat, 
-                   color = fur_color(nyc_squirrels_clean$primary_fur_color), 
-                   radius = 0.5, 
-                   fill = T,
-                   fillOpacity = 0.5,
-                   opacity = 1,
-                   popup = 
-               paste('<img src="', nyc_squirrels_clean_test$label, '" alt="these be unis" width="75"><br>',
-                     "<b>ID:</b>",nyc_squirrels_clean$unique_squirrel_id,"<br/>",
-                     "<b>Color:</b>",nyc_squirrels_clean$primary_fur_color,"<br/>"))%>%
-   addLegend("bottomright", pal = fur_color,
-                         values = nyc_squirrels_clean$primary_fur_color,
-                         title = "Primary fur color")
-                   
-```    
-
-
-
-```{r, plot}
 
 activity_graph <- activity_percentages %>% 
 ggplot(aes(x = percentage, 
