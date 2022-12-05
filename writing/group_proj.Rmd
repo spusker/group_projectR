@@ -78,7 +78,6 @@ activity_percentages <- nyc_squirrels_clean %>%
   select(running, chasing,climbing, eating, foraging, kuks, quaas, moans, tail_flags, tail_twitches, indifferent, runs_from) %>% 
   rownames_to_column(var = "ID") %>% 
   as.data.frame() %>% 
-<<<<<<< HEAD
   pivot_longer(names_to = "activity", values_to = "true_false")
 
 fur_color_activity <- nyc_squirrels_clean %>%
@@ -86,7 +85,7 @@ fur_color_activity <- nyc_squirrels_clean %>%
   group_by(primary_fur_color) %>% 
   summarize(count = n())
 
-=======
+
   pivot_longer(cols = running:runs_from, names_to = "activity",
                values_to = "true_false") %>% 
   group_by(activity) %>% 
@@ -102,17 +101,15 @@ fur_color_activity <- nyc_squirrels_clean %>%
          percentage = round(percentage, 2),
          tooltip_text = paste0(toupper(activity), "\n", 
                    percentage, "%"))
->>>>>>> 59d424f4562598da58f358199b67bed022e6119d
   
 ```
 
 ### Plot
 
-<<<<<<< HEAD
 ```{r, table 2}
 nyc_squirrels_clean_test <- nyc_squirrels_clean %>%
   mutate(label = primary_fur_color)%>%
-  mutate(label = fct_recode(label,
+  mutate(label = fct_recode(label))
                             "https://inaturalist-open-data.s3.amazonaws.com/photos/176023507/original.jpeg" = "Gray",
                             "https://cms.prod.nypr.digital/images/329566/fill-1200x800%7Cformat-jpeg%7Cjpegquality-85" = "Black",
                             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQub0O9b_HAjJjvFaz-w_d9sE6hsJLcRjadJfipfXv5udR5hPsKjsFcgXiKtxohSpQXB8I&usqp=CAU" = "Cinnamon"))
@@ -145,6 +142,7 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
 
 
 ```{r, plot}
+
 activity_graph <- activity_percentages %>% 
 ggplot(aes(x = percentage, 
            y = reorder(activity, percentage), 
@@ -161,19 +159,23 @@ girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
 ```
 ## HTML Trial
 ```{r}
+
 my_widget <- girafe(ggobj = activity_graph, 
                     width_svg = 10, height_svg = 5) %>%
   girafe_options(opts_hover(css = "fill:cyan;"))
 
 htmlwidgets::saveWidget(my_widget, "my_widget_page.html", 
                         selfcontained = TRUE)
+
 ```
 
 
 ## Install software
 
 ```{r}
+
 remotes::install_github("hrbrmstr/albersusa")
+
 ```
 
 
