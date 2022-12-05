@@ -111,10 +111,10 @@ fur_color_activity <- nyc_squirrels_clean %>%
 ```{r, table 2}
 nyc_squirrels_clean_test <- nyc_squirrels_clean %>%
   mutate(label = primary_fur_color)%>%
-  mutate(label = fct_recode(label))
-                            "https://inaturalist-open-data.s3.amazonaws.com/photos/176023507/original.jpeg" = "Gray",
-                            "https://cms.prod.nypr.digital/images/329566/fill-1200x800%7Cformat-jpeg%7Cjpegquality-85" = "Black",
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQub0O9b_HAjJjvFaz-w_d9sE6hsJLcRjadJfipfXv5udR5hPsKjsFcgXiKtxohSpQXB8I&usqp=CAU" = "Cinnamon"))
+  mutate(label = fct_recode(label,
+                      "https://inaturalist-open-data.s3.amazonaws.com/photos/176023507/original.jpeg" = "Gray",
+                      "https://cms.prod.nypr.digital/images/329566/fill-1200x800%7Cformat-jpeg%7Cjpegquality-85" = "Black",
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQub0O9b_HAjJjvFaz-w_d9sE6hsJLcRjadJfipfXv5udR5hPsKjsFcgXiKtxohSpQXB8I&usqp=CAU" = "Cinnamon"))
 
 
 fur_color <- colorFactor(c("Black","Brown","Gray"),
@@ -132,7 +132,7 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
                    fillOpacity = 0.5,
                    opacity = 1,
                    popup = 
-               paste('<img src="', nyc_squirrels_clean_test$label, '" alt="these be unis" width="75"><br>',
+               paste('<img src="', nyc_squirrels_clean_test$label, '" alt="these be unis" width="200"><br>',
                      "<b>ID:</b>",nyc_squirrels_clean$unique_squirrel_id,"<br/>",
                      "<b>Color:</b>",nyc_squirrels_clean$primary_fur_color,"<br/>"))%>%
    addLegend("bottomright", pal = fur_color,
