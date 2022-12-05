@@ -36,6 +36,7 @@ library(vcd)
 library(remotes)
 library(ggiraph)
 library(patchwork)
+remotes::install_github("hrbrmstr/albersusa")
 
 nyc_squirrels <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
 
@@ -75,7 +76,8 @@ leaflet() %>%
 ## Table 1
 
 activity_percentages <- nyc_squirrels_clean %>% 
-  select(running, chasing,climbing, eating, foraging, kuks, quaas, moans, tail_flags, tail_twitches, indifferent, runs_from) %>% 
+  select(running, chasing,climbing, eating, foraging, kuks, quaas, moans, 
+         tail_flags, tail_twitches, indifferent, runs_from) %>% 
   rownames_to_column(var = "ID") %>% 
   as.data.frame() %>% 
   pivot_longer(names_to = "activity", values_to = "true_false")
@@ -157,32 +159,8 @@ ggplot(aes(x = percentage,
 girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
 
 ```
-## HTML Trial
-```{r}
-
-my_widget <- girafe(ggobj = activity_graph, 
-                    width_svg = 10, height_svg = 5) %>%
-  girafe_options(opts_hover(css = "fill:cyan;"))
-
-htmlwidgets::saveWidget(my_widget, "my_widget_page.html", 
-                        selfcontained = TRUE)
-
-```
 
 
-## Install software
-
-```{r}
-
-remotes::install_github("hrbrmstr/albersusa")
-
-```
 
 
-### Network
-
-```{r}
-
-
-```
 
