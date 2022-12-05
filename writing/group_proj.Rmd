@@ -1,13 +1,15 @@
 ---
-title: "group_project"
-author: "Stephanie Pusker"
+title: "Group Project"
+author: "Stephanie Pusker, Mohamed Alhassan, Haiyang Hu"
 date: "2022-11-16"
 output: 
   flexdashboard::flex_dashboard:
      storyboard: true
+     social: menu
+     source: embed
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
 ```
 
@@ -53,7 +55,7 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 
 ### Interactive Map
 
-```{r, Interactive Map}
+```{r, echo = FALSE}
 
 nyc_squirrels_clean_test <- nyc_squirrels_clean %>%
   mutate(label = primary_fur_color)%>%
@@ -90,7 +92,7 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
 
 ### Interactive Graph
 
-```{r, Making of the Interactive Graph}
+```{r, echo = FALSE}
 
 activity_percentages <- nyc_squirrels_clean %>% 
   select(running, chasing,climbing, eating, foraging, kuks, quaas, moans, 
@@ -132,15 +134,9 @@ girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
 ```
 
 
-
-```{r, interactive graph}
-girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
-```
-
-
 ### Interactive Table
 
-```{r}
+```{r, echo = FALSE}
 
 nyc_squirrels_filtered <- nyc_squirrels_clean %>% 
   select(primary_fur_color, highlight_fur_color, age, date, unique_squirrel_id)
