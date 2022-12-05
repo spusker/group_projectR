@@ -109,40 +109,10 @@ ggplot(aes(x = percentage, y = reorder(activity, percentage), fill = activity)) 
   theme_few() 
 ```
 
-
-```{r}
-df <- nyc_squirrels_clean %>% 
-  select(running, chasing,climbing, eating, foraging, kuks, quaas, moans, tail_flags, tail_twitches, indifferent, runs_from) %>% 
-  as.data.frame() %>% 
-  pivot_longer(cols = running:runs_from, names_to = "activity",
-               values_to = "true_false") %>% 
-  group_by(activity)
-
-data("HairEyeColor")
-mosaic(df, shade = TRUE)
-```
-
-
-
-
-
-
 ### Network
 
 ```{r}
-nodes <- nyc_squirrels_clean %>% 
-  select(unique_squirrel_id)
 
-color <- nyc_squirrels_clean %>% 
-  mutate(new_column = fct_reorder(.f = unique_squirrel_id, .x = hectare))
 
-color_2 <- transform(color, new_column = sample(new_column))
-
-color_2 <- color_2 %>% 
-  select(unique_squirrel_id, new_column)
-
-network_data <- graph_from_data_frame(d = links,
-                                      directed = TRUE,
-                                      vertices = nodes)
 ```
 
