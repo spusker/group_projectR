@@ -97,14 +97,6 @@ activity_percentages <- nyc_squirrels_clean %>%
          tail_flags, tail_twitches, indifferent, runs_from) %>% 
   rownames_to_column(var = "ID") %>% 
   as.data.frame() %>% 
-  pivot_longer(names_to = "activity", values_to = "true_false")
-
-fur_color_activity <- nyc_squirrels_clean %>%
-  select(primary_fur_color, running)
-  group_by(primary_fur_color) %>% 
-  summarize(count = n())
-
-
   pivot_longer(cols = running:runs_from, names_to = "activity",
                values_to = "true_false") %>% 
   group_by(activity) %>% 
