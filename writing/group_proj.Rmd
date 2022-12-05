@@ -98,11 +98,8 @@ activity_percentages <- nyc_squirrels_clean %>%
   select(running, chasing,climbing, eating, foraging, kuks, quaas, moans, 
          tail_flags, tail_twitches, indifferent, runs_from) %>% 
   rownames_to_column(var = "ID") %>% 
-<<<<<<< HEAD
   as.data.frame() %>%
-=======
   as.data.frame() %>% 
->>>>>>> 798b7b2268e685ecc8d0ff54a310c1d84e078894
   pivot_longer(cols = running:runs_from, names_to = "activity",
                values_to = "true_false") %>% 
   group_by(activity) %>% 
