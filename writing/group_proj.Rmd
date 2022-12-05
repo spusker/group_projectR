@@ -33,6 +33,9 @@ library(igraph)
 library(visNetwork)
 library(gganimate)
 library(vcd)
+library(remotes)
+library(ggiraph)
+library(patchwork)
 
 nyc_squirrels <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
 
@@ -96,18 +99,46 @@ activity_percentages <- nyc_squirrels_clean %>%
   mutate(percentage = 100*proportion) %>% 
   select(activity, percentage) %>% 
   mutate(activity = gsub("_", " ", activity),
-         activity =  str_to_title(activity))
+         activity =  str_to_title(activity),
+         percentage = round(percentage, 2),
+         tooltip_text = paste0(toupper(activity), "\n", 
+                   percentage, "%"))
   
 ```
 
 ### Plot
 
 ```{r, plot}
-activity_percentages %>% 
-ggplot(aes(x = percentage, y = reorder(activity, percentage), fill = activity)) +
-  geom_col() +
+activity_graph <- activity_percentages %>% 
+ggplot(aes(x = percentage, 
+           y = reorder(activity, percentage), 
+           fill = activity,
+           tooltip = tooltip_text, data_id = activity #<<
+           )) +
+  geom_col_interactive(color = "black", size = 0.5) +
+  labs(x = "Percentage", y = "Activity", title = "Activity Percentages") +
   theme_few() 
+
+girafe(ggobj = activity_graph, width_svg = 5, height_svg = 4)
+
 ```
+## HTML Trial
+```{r}
+my_widget <- girafe(ggobj = activity_graph, 
+                    width_svg = 10, height_svg = 5) %>%
+  girafe_options(opts_hover(css = "fill:cyan;"))
+
+htmlwidgets::saveWidget(my_widget, "my_widget_page.html", 
+                        selfcontained = TRUE)
+```
+
+
+## Install software
+
+```{r}
+remotes::install_github("hrbrmstr/albersusa")
+```
+
 
 ### Network
 
