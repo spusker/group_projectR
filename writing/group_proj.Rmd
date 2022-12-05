@@ -86,11 +86,11 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
                    
 ```    
 
-
+## Plot
 
 ```{r, plot}
 
-## Table 1
+## Plot 
 
 activity_percentages <- nyc_squirrels_clean %>% 
   select(running, chasing,climbing, eating, foraging, kuks, quaas, moans, 
