@@ -128,7 +128,6 @@ ggplot(aes(x = percentage,
   theme(legend.position = "none") +
   theme(plot.title=element_text(hjust=0.5))
 
-
 girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
 
 ```
@@ -138,10 +137,10 @@ girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
 ```{r}
 
 nyc_squirrels_filtered <- nyc_squirrels_clean %>% 
-  select(primary_fur_color, age, date, unique_squirrel_id)
+  select(primary_fur_color, highlight_fur_color, age, date, unique_squirrel_id)
 
-datatable(nyc_squirrels_filtered, colnames = c("Fur Color", "Age", "Date",
-                                               "ID"), 
+datatable(nyc_squirrels_filtered, colnames = c("Primary Fur Color", "Highlights",
+                                               "Age", "Date", "ID"), 
           extensions = "Scroller", style="bootstrap", class="compact", 
           width="100%", options=list(deferRender=TRUE, scrollY=300, 
                                      scroller=TRUE))
