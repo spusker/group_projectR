@@ -32,6 +32,7 @@ library(tigris)
 library(igraph)
 library(visNetwork)
 library(gganimate)
+library(vcd)
 
 nyc_squirrels <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
 
@@ -94,23 +95,36 @@ activity_percentages <- nyc_squirrels_clean %>%
   unnest(proportion) %>% 
   mutate(percentage = 100*proportion) %>% 
   select(activity, percentage) %>% 
+  mutate(activity = gsub("_", " ", activity),
+         activity =  str_to_title(activity))
   
 ```
 
 ### Plot
 
 ```{r, plot}
-
-activity_percentages_2 <- activity_percentages %>% 
-  mutate(percentage = percentage/2)
-
 activity_percentages %>% 
-  ggplot(aes(x = percentage, y = reorder(activity, percentage))) +
-  geom_col() + 
-
-
-
+ggplot(aes(x = percentage, y = reorder(activity, percentage), fill = activity)) +
+  geom_col() +
+  theme_few() 
 ```
+
+
+```{r}
+df <- nyc_squirrels_clean %>% 
+  select(running, chasing,climbing, eating, foraging, kuks, quaas, moans, tail_flags, tail_twitches, indifferent, runs_from) %>% 
+  as.data.frame() %>% 
+  pivot_longer(cols = running:runs_from, names_to = "activity",
+               values_to = "true_false") %>% 
+  group_by(activity)
+
+data("HairEyeColor")
+mosaic(df, shade = TRUE)
+```
+
+
+
+
 
 
 ### Network
