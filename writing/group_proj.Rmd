@@ -88,10 +88,9 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
                    
 ```    
 
-
 ### Interactive Graph
 
-```{r, Interactive Graph}
+```{r, Making of the Interactive Graph}
 
 activity_percentages <- nyc_squirrels_clean %>% 
   select(running, chasing,climbing, eating, foraging, kuks, quaas, moans, 
@@ -131,6 +130,13 @@ ggplot(aes(x = percentage,
 girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
 
 ```
+
+
+
+```{r, interactive graph}
+girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
+```
+
 
 ### Interactive Table
 
