@@ -29,7 +29,13 @@ library(ggthemes)
 library(viridis)
 library(tidyverse)
 library(tigris)
-
+library(igraph)
+library(visNetwork)
+library(gganimate)
+library(vcd)
+library(remotes)
+library(ggiraph)
+library(patchwork)
 
 nyc_squirrels <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
 
@@ -68,69 +74,31 @@ leaflet() %>%
 
 ## Table 1
 
-df_table <- nyc_squirrels_clean %>% 
-  select(running, chasing,climbing, eating, foraging, kuks, quaas, moans, tail_flags, tail_twitches, indifferent, runs_from)
-
-df_table_2 <- df_table %>%
+activity_percentages <- nyc_squirrels_clean %>% 
+  select(running, chasing,climbing, eating, foraging, kuks, quaas, moans, tail_flags, tail_twitches, indifferent, runs_from) %>% 
+  rownames_to_column(var = "ID") %>% 
   as.data.frame() %>% 
-  pivot_longer(names_to = "activity", values_to = "true_false")
-
-fur_color_activity <- nyc_squirrels_clean %>%
-  select(primary_fur_color, running)
-  group_by(primary_fur_color) %>% 
-  summarize(count = n())
-
-running <- nyc_squirrels_clean %>%
-  group_by(running) %>% 
-  summarize(count = n()) %>% 
-  ungroup() %>% 
-  group_by(chasing) %>% 
-  summarize(count = n())
+  pivot_longer(cols = running:runs_from, names_to = "activity",
+               values_to = "true_false") %>% 
+  group_by(activity) %>% 
+  nest() %>% 
+  mutate(proportion = map(data, ~ .x %>% 
+                            pull("true_false") %>% 
+                            mean())) %>% 
+  unnest(proportion) %>% 
+  mutate(percentage = 100*proportion) %>% 
+  select(activity, percentage) %>% 
+  mutate(activity = gsub("_", " ", activity),
+         activity =  str_to_title(activity),
+         percentage = round(percentage, 2),
+         tooltip_text = paste0(toupper(activity), "\n", 
+                   percentage, "%"))
   
-chasing <- nyc_squirrels_clean %>%
-  group_by(chasing) %>% 
-  summarize(count = n())
-
-climbing <- nyc_squirrels_clean %>%
-  group_by(climbing) %>% 
-  summarize(count = n())
-
-eating <- nyc_squirrels_clean %>%
-  group_by(eating) %>% 
-  summarize(count = n())
-
-kuks <- nyc_squirrels_clean %>%
-  group_by(kuks) %>% 
-  summarize(count = n())
-
-quaas <- nyc_squirrels_clean %>%
-  group_by(quaas) %>% 
-  summarize(count = n())
-
-moans <- nyc_squirrels_clean %>%
-  group_by(moans) %>% 
-  summarize(count = n())
-
-tail_flags <- nyc_squirrels_clean %>%
-  group_by(tail_flags) %>% 
-  summarize(count = n())
-
-tail_twitches <- nyc_squirrels_clean %>%
-  group_by(tail_twitches) %>% 
-  summarize(count = n())
-
-indifferent <- nyc_squirrels_clean %>%
-  group_by(indifferent) %>% 
-  summarize(count = n())
-
-runs_from <- nyc_squirrels_clean %>%
-  group_by(runs_from) %>% 
-  summarize(count = n())
-
 ```
 
 ### Plot
 
+<<<<<<< HEAD
 ```{r, table 2}
 nyc_squirrels_clean_test <- nyc_squirrels_clean %>%
   mutate(label = primary_fur_color)%>%
@@ -162,10 +130,46 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
                          values = nyc_squirrels_clean$primary_fur_color,
                          title = "Primary fur color")
                    
-    
+```    
 
 
 
+```{r, plot}
+activity_graph <- activity_percentages %>% 
+ggplot(aes(x = percentage, 
+           y = reorder(activity, percentage), 
+           fill = activity,
+           tooltip = tooltip_text, data_id = activity
+           )) +
+  geom_col_interactive(color = "black", size = 0.3) +
+  labs(x = "Percentage", y = "Activity", title = "Activity Percentages") +
+  theme_few() 
+
+
+girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
+
+```
+## HTML Trial
+```{r}
+my_widget <- girafe(ggobj = activity_graph, 
+                    width_svg = 10, height_svg = 5) %>%
+  girafe_options(opts_hover(css = "fill:cyan;"))
+
+htmlwidgets::saveWidget(my_widget, "my_widget_page.html", 
+                        selfcontained = TRUE)
+```
+
+
+## Install software
+
+```{r}
+remotes::install_github("hrbrmstr/albersusa")
+```
+
+
+### Network
+
+```{r}
 
 
 ```
