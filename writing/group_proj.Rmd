@@ -89,7 +89,7 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
 ```    
 
 
-## Interactive Graph
+### Interactive Graph
 
 ```{r, Interactive Graph}
 
@@ -133,11 +133,17 @@ girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
 
 ```
 
-## Something
+### Interactive Table
 
 ```{r}
 
+nyc_squirrels_filtered <- nyc_squirrels_clean %>% 
+  select(primary_fur_color, age, date)
 
+datatable(nyc_squirrels_filtered, colnames = c("Fur Color", "Age", "Date"), 
+          extensions = "Scroller", style="bootstrap", class="compact", 
+          width="100%", options=list(deferRender=TRUE, scrollY=300, 
+                                     scroller=TRUE))
 
 ```
 
