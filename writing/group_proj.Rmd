@@ -79,7 +79,7 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
                    fillOpacity = 0.5,
                    opacity = 1,
                    popup = 
-               paste('<img src="', nyc_squirrels_clean_test$label, '" alt="these be unis" width="75"><br>',
+               paste('<img src="', nyc_squirrels_clean_test$label, '" alt="these be unis" width="200"><br>',
                      "<b>ID:</b>",nyc_squirrels_clean$unique_squirrel_id,"<br/>",
                      "<b>Color:</b>",nyc_squirrels_clean$primary_fur_color,"<br/>"))%>%
    addLegend("bottomright", pal = fur_color,
@@ -98,7 +98,10 @@ activity_percentages <- nyc_squirrels_clean %>%
          tail_flags, tail_twitches, indifferent, runs_from) %>% 
   rownames_to_column(var = "ID") %>% 
   as.data.frame() %>%
+<<<<<<< HEAD
   as.data.frame() %>% 
+=======
+>>>>>>> 1a21881f8740b0f6d761844f724ab0cc54cec5aa
   pivot_longer(cols = running:runs_from, names_to = "activity",
                values_to = "true_false") %>% 
   group_by(activity) %>% 
