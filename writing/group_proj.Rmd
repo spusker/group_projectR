@@ -31,6 +31,7 @@ library(tidyverse)
 library(tigris)
 library(igraph)
 library(visNetwork)
+library(gganimate)
 
 nyc_squirrels <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
 
@@ -92,13 +93,20 @@ activity_percentages <- nyc_squirrels_clean %>%
                             mean())) %>% 
   unnest(proportion) %>% 
   mutate(percentage = 100*proportion) %>% 
-  select(activity, percentage)
-
+  select(activity, percentage) %>% 
+  
 ```
 
 ### Plot
 
 ```{r, plot}
+
+activity_percentages_2 <- activity_percentages %>% 
+  mutate(percentage = percentage/2)
+
+activity_percentages %>% 
+  ggplot(aes(x = percentage, y = reorder(activity, percentage))) +
+  geom_col() + 
 
 
 
