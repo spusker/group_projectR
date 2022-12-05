@@ -113,13 +113,13 @@ activity_graph <- activity_percentages %>%
 ggplot(aes(x = percentage, 
            y = reorder(activity, percentage), 
            fill = activity,
-           tooltip = tooltip_text, data_id = activity #<<
+           tooltip = tooltip_text, data_id = activity
            )) +
-  geom_col_interactive(color = "black", size = 0.5) +
+  geom_col_interactive(color = "black", size = 0.3) +
   labs(x = "Percentage", y = "Activity", title = "Activity Percentages") +
   theme_few() 
 
-girafe(ggobj = activity_graph, width_svg = 5, height_svg = 4)
+girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
 
 ```
 ## HTML Trial
