@@ -139,11 +139,3 @@ htmlwidgets::saveWidget(my_widget, "my_widget_page.html",
 remotes::install_github("hrbrmstr/albersusa")
 ```
 
-
-### Network
-
-```{r}
-
-
-```
-
