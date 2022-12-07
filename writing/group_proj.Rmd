@@ -7,7 +7,7 @@ output:
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, error = FALSE)
 ```
 
 ```{r, include = FALSE}
@@ -51,8 +51,31 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 
 ```
 
-Visualization {data-icon="fa-map"}
+
+Map {data-icon="fa-map"}
 ===================================== 
+
+Column {data-width=200}
+-------------------------------------
+
+### About this flexdashboard
+
+- This dashboard allows you to explore locations and activities of various types
+of squirrels in Central Park in Manhattan
+
+- This data set was obtained [here](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-10-29)
+
+- The metro areas covered are depicted in this interactive map of central park
+
+- We decided to make a realistic map using `Esri.WorldImagery`
+
+- Note the images that pop up when a point is clicked on - this is using HTML 
+code
+
+- Explore the different data visualizations above
+
+Column {data-width=800}
+-------------------------------------
 
 ### Interactive Map: individual squirrel points by color in central park 
 ```{r, echo = FALSE}
@@ -93,6 +116,27 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
 
 Graph {data-icon="fa-signal"}
 =====================================  
+
+Column {data-width=200}
+-------------------------------------
+
+### About the interactive graph
+
+- The making of this graph included a lot of regular expressions!
+
+- One of the functions, `girafe`, is from the package 
+`"hrbrmstr/albersusa"`
+
+- This function creates an interactive graphic with a `ggplot` object
+
+- Check it out!
+
+- From the author of this graph, Mohamed: "Um I had so much fun making this 
+gorgeous, potentially glamorous graph. I hope you enjoy this stunning 
+depiction of squirrel activities. Love, Mohamed ;)"
+
+Column {data-width=800}
+-------------------------------------
 
 ### Interactive Graph: the squirrels and their activities
 
@@ -137,9 +181,9 @@ girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
 
 ```
 
+
 Table {data-icon="fa-table"}
 =====================================  
-
 ### Interactive Table: try searching in the boxes to narrow down the dataset
 
 ```{r, echo = FALSE}
