@@ -114,6 +114,7 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
                          title = "Primary fur color")
                    
 ```
+
 ```{r}
 nyc_squirrels_clean_test <- nyc_squirrels_clean %>%
   mutate(label = primary_fur_color)%>%
