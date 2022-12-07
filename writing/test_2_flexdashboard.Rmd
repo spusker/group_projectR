@@ -1,0 +1,168 @@
+---
+title: "Multiple Pages"
+output: flexdashboard::flex_dashboard
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
+```
+
+
+```{r, include = FALSE}
+library(flexdashboard)
+library(readr)
+library(lubridate)
+library(shiny)
+library(jsonlite)
+library(maptools)
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+library(purrr)
+library(leaflet)
+library(plotly)
+library(DT)
+library(ggthemes)
+library(viridis)
+library(tidyverse)
+library(tigris)
+library(igraph)
+library(visNetwork)
+library(gganimate)
+library(vcd)
+library(remotes)
+library(ggiraph)
+library(patchwork)
+remotes::install_github("hrbrmstr/albersusa")
+library(formattable)
+
+nyc_squirrels <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
+
+nyc_squirrels_clean <- nyc_squirrels %>% 
+  select(long, lat, unique_squirrel_id, hectare, date, hectare_squirrel_number,
+         age, primary_fur_color, highlight_fur_color, running, chasing,
+         climbing, eating, foraging, kuks, quaas, moans, tail_flags,
+         tail_twitches, indifferent, runs_from, community_districts,
+         police_precincts) %>% 
+  mutate(date = mdy(date)) %>% 
+  na.omit()
+
+```
+
+Visualization {data-icon="fa-map"}
+===================================== 
+    
+### Chart 1
+    
+```{r, echo = FALSE}
+nyc_squirrels_clean_test <- nyc_squirrels_clean %>%
+  mutate(label = primary_fur_color)%>%
+
+  mutate(label = fct_recode(label,
+  "https://inaturalist-open-data.s3.amazonaws.com/photos/176023507/original.jpeg" = "Gray",             "https://cms.prod.nypr.digital/images/329566/fill-1200x800%7Cformat-jpeg%7Cjpegquality-85" =   "Black",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQub0O9b_HAjJjvFaz-w_d9sE6hsJLcRjadJfipfXv5udR5hPsKjsFcgXiKtxohSpQXB8I&usqp=CAU" = "Cinnamon"))
+
+
+
+fur_color <- colorFactor(c("Black","Brown","Gray"),
+                               domain = nyc_squirrels_clean$primary_fur_color)
+
+ leaflet() %>% 
+  addTiles() %>% 
+  fitBounds(-73.9823592,40.7636484,-73.9492441, 40.8005539)%>%
+  addTiles() %>% 
+  addCircleMarkers(nyc_squirrels_clean$long, 
+                   nyc_squirrels_clean$lat, 
+                   color = fur_color(nyc_squirrels_clean$primary_fur_color), 
+                   radius = 0.5, 
+                   fill = T,
+                   fillOpacity = 0.5,
+                   opacity = 1,
+                   popup = 
+               paste('<img src="', nyc_squirrels_clean_test$label, '" alt="these be unis" width="200"><br>',
+                     "<b>ID:</b>",nyc_squirrels_clean$unique_squirrel_id,"<br/>",
+                     "<b>Color:</b>",nyc_squirrels_clean$primary_fur_color,"<br/>"))%>%
+   addLegend("bottomright", pal = fur_color,
+                         values = nyc_squirrels_clean$primary_fur_color,
+                         title = "Primary fur color")
+```
+   
+Graph {data-icon="fa-signal"}
+=====================================     
+
+### Table 1
+    
+```{r, echo = FALSE}
+activity_percentages <- nyc_squirrels_clean %>% 
+  select(running, chasing,climbing, eating, foraging, kuks, quaas, moans, 
+         tail_flags, tail_twitches, indifferent, runs_from) %>% 
+  rownames_to_column(var = "ID") %>% 
+  as.data.frame() %>%
+  as.data.frame() %>% 
+  pivot_longer(cols = running:runs_from, names_to = "activity",
+               values_to = "true_false") %>% 
+  group_by(activity) %>% 
+  nest() %>% 
+  mutate(proportion = map(data, ~ .x %>% 
+                            pull("true_false") %>% 
+                            mean())) %>% 
+  unnest(proportion) %>% 
+  mutate(percentage = 100*proportion) %>% 
+  select(activity, percentage) %>% 
+  mutate(activity = gsub("_", " ", activity),
+         activity =  str_to_title(activity),
+         percentage = round(percentage, 2),
+         tooltip_text = paste0(toupper(activity), "\n", 
+                   percentage, "%"),
+         tooltip_text = str_to_title(tooltip_text))
+
+activity_graph <- activity_percentages %>% 
+ggplot(aes(x = percentage, 
+           y = reorder(activity, percentage), 
+           fill = activity,
+           tooltip = tooltip_text, data_id = activity
+           )) +
+  geom_col_interactive(color = "black", size = 0.3) +
+  labs(x = "Percentage", y = "Activity", title = "Activity Percentages") +
+  theme_few() +
+  theme(legend.position = "none") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
+
+```
+ 
+ 
+Table {data-icon="fa-table"}
+=====================================  
+
+### Table 2
+
+```{r, echo = FALSE}
+nyc_squirrels_filtered <- nyc_squirrels_clean %>% 
+  select(unique_squirrel_id, date, primary_fur_color, highlight_fur_color, age, running, eating, foraging, indifferent, runs_from) 
+  
+true_false <- formatter("span",
+                        style = x ~ style(
+                          font.weight = "bold",
+                          color = ifelse(x == TRUE, "forestgreen", ifelse)
+                        ))
+
+datatable(nyc_squirrels_filtered,
+          colnames = c("ID", "Date",
+                       "Primary Color", "Highlights", "Age",
+                       "Running", "Eating", "Foraging", "Indifferent", "Runs From"),
+          options = list(paging = TRUE, 
+                 pageLength = 15, 
+                 scrollX = TRUE,   
+                 scrollY = TRUE,   
+                 autoWidth = TRUE,
+                 dom = 'Bfrtip',
+                 buttons = c('csv'),
+                 columnDefs = list(list(targets = '_all', className = 'dt-center'),
+                                   list(targets = c(0, 8, 9), visible = TRUE))),
+          extensions = 'Buttons',
+          selection = 'single',
+          filter = 'top',
+          rownames = FALSE)
+```
