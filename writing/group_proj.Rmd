@@ -112,10 +112,8 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
    addLegend("bottomright", pal = fur_color,
                          values = nyc_squirrels_clean$primary_fur_color,
                          title = "Primary fur color")
-                   
-```
-```{r}
-nyc_squirrels_clean_test <- nyc_squirrels_clean %>%
+ 
+ nyc_squirrels_clean_test <- nyc_squirrels_clean %>%
   mutate(label = primary_fur_color)%>%
   
   mutate(label = fct_recode(label,
@@ -126,12 +124,21 @@ nyc_squirrels_clean_test <- nyc_squirrels_clean %>%
     primary_fur_color == "Cinnamon" ~ "2",
     primary_fur_color == "Black" ~ "3"),
     myicon = as.factor(myicon))
-
-a <- as.numeric(nyc_squirrels_clean_test$myicon)
-leaflet() %>% 
+ 
+ icon_test <- iconList(
+  Gray <- makeIcon(iconUrl = "https://www.freeiconspng.com/uploads/squirrel-png-9.png",
+                   iconWidth = 15, iconHeight = 15),
+  Cinnamon <- makeIcon(iconUrl = "https://www.freeiconspng.com/uploads/squirrel-png-23.png",
+                       iconWidth = 15, iconHeight = 15),
+  Black <- makeIcon(iconUrl = "https://www.freeiconspng.com/uploads/squirrel-png-2.png",
+                    iconWidth = 15, iconHeight = 15))
+ 
+ a <- as.numeric(nyc_squirrels_clean_test$myicon)
+ 
+ leaflet() %>% 
   addProviderTiles("Stamen.Terrain") %>% 
   fitBounds(-73.9823592,40.7636484,-73.9492441, 40.8005539)%>%
-  addProviderTiles("Esri.WorldImagery") %>% 
+  #  addProviderTiles("Esri.WorldImagery") %>% 
   addMarkers(nyc_squirrels_clean$long, 
              nyc_squirrels_clean$lat, 
              icon = icon_test[a],
@@ -142,6 +149,7 @@ leaflet() %>%
   addLegend("bottomright", pal = fur_color,
             values = nyc_squirrels_clean$primary_fur_color,
             title = "Primary fur color")
+                   
 ```
 
 Graph {data-icon="fa-signal"}
