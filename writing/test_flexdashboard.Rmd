@@ -1,0 +1,30 @@
+---
+title: "testing out flexdashboard formatting"
+author: "Stephanie Pusker"
+date: "2022-12-07"
+output: 
+  flexdashboard::flex_dashboard:
+    storyboard: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+### Interactive Map
+```{r cars}
+summary(cars)
+```
+
+
+### Interactive Plot
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+
+plot(iris)
+```
+
+
+
