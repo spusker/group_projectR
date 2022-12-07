@@ -3,7 +3,8 @@ title: "Group Project"
 author: "Stephanie Pusker, Mohamed Alhassan, Haiyang Hu"
 date: "2022-12-14"
 output: 
-  flexdashboard::flex_dashboard
+  flexdashboard::flex_dashboard:
+    storyboard: TRUE
 ---
 
 ```{r setup, include = FALSE}
@@ -51,11 +52,6 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 
 ```
 
-{.storyboard}
-=========================================
-
-{data-width=350}
------------------------------------------
 ### Interactive Map: individual squirrel points by color in central park 
 ```{r, echo = FALSE}
 
