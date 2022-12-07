@@ -37,6 +37,7 @@ library(ggiraph)
 library(patchwork)
 remotes::install_github("hrbrmstr/albersusa")
 library(formattable)
+library(fontawesome)
 
 nyc_squirrels <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
 
@@ -174,13 +175,13 @@ Table {data-icon="fa-table"}
 ```{r, echo = FALSE}
 
 nyc_squirrels_filtered <- nyc_squirrels_clean %>% 
-  select(unique_squirrel_id, date, primary_fur_color, highlight_fur_color, age, running, eating, foraging, indifferent, runs_from) 
-  
-true_false <- formatter("span",
-                        style = x ~ style(
-                          font.weight = "bold",
-                          color = ifelse(x == TRUE, "forestgreen", ifelse)
-                        ))
+  select(unique_squirrel_id, date, primary_fur_color, highlight_fur_color, age, running, eating, foraging, indifferent, runs_from)
+
+nyc_squirrels_filtered <- nyc_squirrels_filtered %>% 
+  mutate(running = ifelse(running == TRUE,
+                          as.character(icon("check", lib = "font-awesome")),
+                          as.character(icon("xmark", lib = "font-awesome"))))
+
 
 datatable(nyc_squirrels_filtered,
           colnames = c("ID", "Date",
@@ -198,6 +199,7 @@ datatable(nyc_squirrels_filtered,
           extensions = 'Buttons',
           selection = 'single',
           filter = 'top',
-          rownames = FALSE)
+          rownames = FALSE,
+          escape = FALSE)
 ```
 
