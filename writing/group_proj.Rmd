@@ -37,6 +37,8 @@ library(remotes)
 library(ggiraph)
 library(patchwork)
 remotes::install_github("hrbrmstr/albersusa")
+library(formattable)
+
 
 nyc_squirrels <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
 
@@ -164,13 +166,10 @@ datatable(nyc_squirrels_filtered,
                  autoWidth = TRUE, 
                  buttons = c('csv', 'excel'),
                  columnDefs = list(list(targets = '_all', className = 'dt-center'),
-                                   list(targets = c(0, 8, 9), visible = TRUE))
-                 ),
-  extensions = 'Buttons',
-  selection = 'single',
-  filter = 'top',              
-  rownames = FALSE                
-)
-
+                                   list(targets = c(0, 8, 9), visible = TRUE))),
+          extensions = 'Buttons',
+          selection = 'single',
+          filter = 'top',
+          rownames = FALSE)
 ```
 
