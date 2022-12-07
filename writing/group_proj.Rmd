@@ -90,6 +90,35 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
                          title = "Primary fur color")
                    
 ```
+```{r}
+nyc_squirrels_clean_test <- nyc_squirrels_clean %>%
+  mutate(label = primary_fur_color)%>%
+  
+  mutate(label = fct_recode(label,
+                            "https://inaturalist-open-data.s3.amazonaws.com/photos/176023507/original.jpeg" = "Gray",             "https://cms.prod.nypr.digital/images/329566/fill-1200x800%7Cformat-jpeg%7Cjpegquality-85" =   "Black",
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQub0O9b_HAjJjvFaz-w_d9sE6hsJLcRjadJfipfXv5udR5hPsKjsFcgXiKtxohSpQXB8I&usqp=CAU" = "Cinnamon"))%>%
+  mutate(myicon = case_when(
+    primary_fur_color == "Gray" ~ "1",
+    primary_fur_color == "Cinnamon" ~ "2",
+    primary_fur_color == "Black" ~ "3"),
+    myicon = as.factor(myicon))
+
+a <- as.numeric(nyc_squirrels_clean_test$myicon)
+leaflet() %>% 
+  addProviderTiles("Stamen.Terrain") %>% 
+  fitBounds(-73.9823592,40.7636484,-73.9492441, 40.8005539)%>%
+  addProviderTiles("Esri.WorldImagery") %>% 
+  addMarkers(nyc_squirrels_clean$long, 
+             nyc_squirrels_clean$lat, 
+             icon = icon_test[a],
+             popup = 
+               paste('<img src="', nyc_squirrels_clean_test$label, '" alt="these be unis" width="200"><br>',
+                     "<b>ID:</b>",nyc_squirrels_clean$unique_squirrel_id,"<br/>",
+                     "<b>Color:</b>",nyc_squirrels_clean$primary_fur_color,"<br/>"))%>%
+  addLegend("bottomright", pal = fur_color,
+            values = nyc_squirrels_clean$primary_fur_color,
+            title = "Primary fur color")
+```
 
 Graph {data-icon="fa-signal"}
 =====================================  
