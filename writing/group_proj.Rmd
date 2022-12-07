@@ -140,7 +140,7 @@ girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
 Table {data-icon="fa-table"}
 =====================================  
 
-### Interactive Table
+### Interactive Table: try searching in the boxes to narrow down the dataset
 
 ```{r, echo = FALSE}
 
