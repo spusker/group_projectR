@@ -26,9 +26,5 @@ plot(pressure)
 plot(iris)
 ```
 
-### Interactive Table
 
-```{r}
-
-```
 
