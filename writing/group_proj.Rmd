@@ -37,6 +37,8 @@ library(remotes)
 library(ggiraph)
 library(patchwork)
 remotes::install_github("hrbrmstr/albersusa")
+library(formattable)
+
 
 nyc_squirrels <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
 
@@ -137,7 +139,7 @@ ggplot(aes(x = percentage,
   labs(x = "Percentage", y = "Activity", title = "Activity Percentages") +
   theme_few() +
   theme(legend.position = "none") +
-  theme(plot.title=element_text(hjust=0.5))
+  theme(plot.title = element_text(hjust = 0.5))
 
 girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
 
@@ -149,13 +151,25 @@ girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
 ```{r, echo = FALSE}
 
 nyc_squirrels_filtered <- nyc_squirrels_clean %>% 
-  select(primary_fur_color, highlight_fur_color, age, date, unique_squirrel_id)
+  select(unique_squirrel_id, date, primary_fur_color, highlight_fur_color, age, running:runs_from) %>%
+  rename_all(stringr::str_to_title)
 
-datatable(nyc_squirrels_filtered, colnames = c("Primary Fur Color", "Highlights",
-                                               "Age", "Date", "ID"), 
-          extensions = "Scroller", style="bootstrap", class="compact", 
-          width="100%", options=list(deferRender=TRUE, scrollY=300, 
-                                     scroller=TRUE))
-
+datatable(nyc_squirrels_filtered,
+          colnames = c("ID", "Date",
+                       "Primary Color", "Highlights", "Age",
+                       "Running", "Chasing", "Climbing", "Eating", "Foraging", "Kuks", "Quaas",
+                       "Moans", "Tail Flags", "Tail Twitches", "Indifferent", "Runs From"), 
+          options = list(paging = TRUE, 
+                 pageLength = 15, 
+                 scrollX = TRUE,   
+                 scrollY = TRUE,   
+                 autoWidth = TRUE, 
+                 buttons = c('csv', 'excel'),
+                 columnDefs = list(list(targets = '_all', className = 'dt-center'),
+                                   list(targets = c(0, 8, 9), visible = TRUE))),
+          extensions = 'Buttons',
+          selection = 'single',
+          filter = 'top',
+          rownames = FALSE)
 ```
 
