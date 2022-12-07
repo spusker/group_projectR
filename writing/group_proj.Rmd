@@ -39,7 +39,6 @@ library(patchwork)
 remotes::install_github("hrbrmstr/albersusa")
 library(formattable)
 
-
 nyc_squirrels <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
 
 nyc_squirrels_clean <- nyc_squirrels %>% 
