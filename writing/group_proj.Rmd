@@ -3,8 +3,7 @@ title: "Group Project"
 author: "Stephanie Pusker, Mohamed Alhassan, Haiyang Hu"
 date: "2022-12-14"
 output: 
-  flexdashboard::flex_dashboard:
-    storyboard: TRUE
+  flexdashboard::flex_dashboard
 ---
 
 ```{r setup, include = FALSE}
@@ -53,6 +52,9 @@ nyc_squirrels_clean <- nyc_squirrels %>%
 
 ```
 
+Visualization {data-icon="fa-map"}
+===================================== 
+
 ### Interactive Map: individual squirrel points by color in central park 
 ```{r, echo = FALSE}
 
@@ -62,24 +64,25 @@ nyc_squirrels_clean_test <- nyc_squirrels_clean %>%
   mutate(label = fct_recode(label,
   "https://inaturalist-open-data.s3.amazonaws.com/photos/176023507/original.jpeg" = "Gray",             "https://cms.prod.nypr.digital/images/329566/fill-1200x800%7Cformat-jpeg%7Cjpegquality-85" =   "Black",
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQub0O9b_HAjJjvFaz-w_d9sE6hsJLcRjadJfipfXv5udR5hPsKjsFcgXiKtxohSpQXB8I&usqp=CAU" = "Cinnamon"))
-
-
+ 
 
 fur_color <- colorFactor(c("Black","Brown","Gray"),
                                domain = nyc_squirrels_clean$primary_fur_color)
 
+
  leaflet() %>% 
-  addTiles() %>% 
-  fitBounds(-73.9823592,40.7636484,-73.9492441, 40.8005539)%>%
-  addTiles() %>% 
+  addProviderTiles("Stamen.Terrain") %>% 
+#  fitBounds(-73.9823592,40.7696484,-73.9492441, 40.7985539)%>%
+   setView(-73.968285,40.785091,14)%>%
+  addProviderTiles("Esri.WorldImagery") %>% 
   addCircleMarkers(nyc_squirrels_clean$long, 
-                   nyc_squirrels_clean$lat, 
-                   color = fur_color(nyc_squirrels_clean$primary_fur_color), 
-                   radius = 0.5, 
-                   fill = T,
-                   fillOpacity = 0.5,
-                   opacity = 1,
-                   popup = 
+             nyc_squirrels_clean$lat, 
+             color = fur_color(nyc_squirrels_clean$primary_fur_color), 
+             radius = 1, 
+             fill = T,
+             fillOpacity = 0.75,
+             opacity = 1,
+             popup = 
                paste('<img src="', nyc_squirrels_clean_test$label, '" alt="these be unis" width="200"><br>',
                      "<b>ID:</b>",nyc_squirrels_clean$unique_squirrel_id,"<br/>",
                      "<b>Color:</b>",nyc_squirrels_clean$primary_fur_color,"<br/>"))%>%
@@ -87,22 +90,12 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
                          values = nyc_squirrels_clean$primary_fur_color,
                          title = "Primary fur color")
                    
-```    
+```
 
+Graph {data-icon="fa-signal"}
+=====================================  
 
-***
-
-- This data set was obtained [here](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-10-29)
-
-- This interactive map uses leaflet as its base with manually input latitude and 
-longitude boundaries. 
-
-- Note the images that pop up when a point is clicked on. This is using HTML 
-code. Enjoy!
-
-- [More to explore with this data](https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Squirrel-Data/vfnx-vebw)
-
-### Interactive Graph
+### Interactive Graph: the squirrels and their activities
 
 ```{r, echo = FALSE}
 
@@ -145,8 +138,10 @@ girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
 
 ```
 
+Table {data-icon="fa-table"}
+=====================================  
 
-### Interactive Table
+### Interactive Table: try searching in the boxes to narrow down the dataset
 
 ```{r, echo = FALSE}
 
