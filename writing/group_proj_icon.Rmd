@@ -98,25 +98,31 @@ fur_color <- colorFactor(c("Black","Brown","Gray"),
                                domain = nyc_squirrels_clean$primary_fur_color)
 
 
- leaflet() %>% 
+icon_test <- iconList(
+  Gray <- makeIcon(iconUrl = "https://www.freeiconspng.com/uploads/squirrel-png-9.png",
+                   iconWidth = 15, iconHeight = 15),
+  Cinnamon <- makeIcon(iconUrl = "https://www.freeiconspng.com/uploads/squirrel-png-23.png",
+                       iconWidth = 15, iconHeight = 15),
+  Black <- makeIcon(iconUrl = "https://www.freeiconspng.com/uploads/squirrel-png-2.png",
+                    iconWidth = 15, iconHeight = 15))
+
+a <- as.numeric(nyc_squirrels_clean_test$myicon)
+
+leaflet() %>% 
   addProviderTiles("Esri.WorldImagery") %>% 
-#  fitBounds(-73.9823592,40.7696484,-73.9492441, 40.7985539)%>%
-   setView(-73.968285,40.785091,14)%>%
+#  fitBounds(-73.9823592,40.7636484,-73.9492441, 40.8005539)%>%
+  setView(-73.968285,40.785091,14)%>%
   addProviderTiles("Esri.WorldImagery") %>% 
-  addCircleMarkers(nyc_squirrels_clean$long, 
+  addMarkers(nyc_squirrels_clean$long, 
              nyc_squirrels_clean$lat, 
-             color = fur_color(nyc_squirrels_clean$primary_fur_color), 
-             radius = 1, 
-             fill = T,
-             fillOpacity = 0.75,
-             opacity = 1,
+             icon = icon_test[a],
              popup = 
                paste('<img src="', nyc_squirrels_clean_test$label, '" alt="these be unis" width="200"><br>',
                      "<b>ID:</b>",nyc_squirrels_clean$unique_squirrel_id,"<br/>",
                      "<b>Color:</b>",nyc_squirrels_clean$primary_fur_color,"<br/>"))%>%
-   addLegend("bottomright", pal = fur_color,
-                         values = nyc_squirrels_clean$primary_fur_color,
-                         title = "Primary fur color")
+  addLegend("bottomright", pal = fur_color,
+            values = nyc_squirrels_clean$primary_fur_color,
+            title = "Primary fur color")
                    
 ```
 
