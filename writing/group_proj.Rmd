@@ -126,15 +126,15 @@ Column {data-width=200}
 - The making of this graph included a lot of regular expressions!
 
 - One of the functions, `girafe`, is from the package 
-`"hrbrmstr/albersusa"`
+`"hrbrmstr/albersusa"` in github
 
 - This function creates an interactive graphic with a `ggplot` object
 
 - Check it out!
 
-- From the author of this graph, Mohamed: "Um I had so much fun making this 
+- From the author of this graph, Mohamed: "I had so much fun making this 
 gorgeous, potentially glamorous graph. I hope you enjoy this stunning 
-depiction of squirrel activities. Love, Mohamed ;)"
+depiction of squirrel activities. Mohamed ;)"
 
 Column {data-width=800}
 -------------------------------------
