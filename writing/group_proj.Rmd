@@ -141,7 +141,7 @@ Column {data-width=200}
   
   - Percentages of each activity.
 
-- Use the `ggiraph` package and change geom_col() to geom_col_interactive()
+- Use the `ggiraph` package and change `geom_col()` to `geom_col_interactive()`
 
   - Include the tooltip in the aes() mapping.
 
@@ -150,10 +150,6 @@ Column {data-width=200}
 - Use the `girafe` function from the `ggiraph` package to display the interactive graph.
 
 - Check it out!
-
-- From the author of this graph, Mohamed: "I had so much fun making this 
-gorgeous, potentially glamorous graph. I hope you enjoy this stunning 
-depiction of squirrel activities. Mohamed ;)"
 
 Column {data-width=800}
 -------------------------------------
@@ -196,7 +192,7 @@ ggplot(aes(x = percentage,
   theme(legend.position = "none") +
   theme(plot.title = element_text(hjust = 0.5))
 
-girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
+girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3)
 
 ```
 
