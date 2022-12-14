@@ -35,9 +35,8 @@ library(vcd)
 library(remotes)
 library(ggiraph)
 library(patchwork)
-remotes::install_github("hrbrmstr/albersusa")
-library(formattable)
-library(fontawesome)
+
+
 
 nyc_squirrels <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
 
@@ -134,18 +133,23 @@ Column {data-width=200}
 
 ### About the interactive graph
 
-- The making of this graph included a lot of regular expressions!
+- Graph with ggplot2.
 
-- One of the functions, `girafe`, is from the package 
-`"hrbrmstr/albersusa"` in github
+  - I wanted to display the percentages of each activity.
 
-- This function creates an interactive graphic with a `ggplot` object
+- Use mutate to create a tooltip column.
+  
+  - Percentages of each activity.
+
+- Use the `ggiraph` package and change `geom_col()` to `geom_col_interactive()`.
+
+  - Include the tooltip in the aes() mapping.
+
+- Save the graph as a object.
+
+- Use the `girafe` function from the `ggiraph` package to display the interactive graph.
 
 - Check it out!
-
-- From the author of this graph, Mohamed: "I had so much fun making this 
-gorgeous, potentially glamorous graph. I hope you enjoy this stunning 
-depiction of squirrel activities. Mohamed ;)"
 
 Column {data-width=800}
 -------------------------------------
@@ -158,7 +162,6 @@ activity_percentages <- nyc_squirrels_clean %>%
   select(running, chasing,climbing, eating, foraging, kuks, quaas, moans, 
          tail_flags, tail_twitches, indifferent, runs_from) %>% 
   rownames_to_column(var = "ID") %>% 
-  as.data.frame() %>%
   as.data.frame() %>% 
   pivot_longer(cols = running:runs_from, names_to = "activity",
                values_to = "true_false") %>% 
@@ -189,7 +192,7 @@ ggplot(aes(x = percentage,
   theme(legend.position = "none") +
   theme(plot.title = element_text(hjust = 0.5))
 
-girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3.5)
+girafe(ggobj = activity_graph, width_svg = 6, height_svg = 3)
 
 ```
 
@@ -203,10 +206,6 @@ Table {data-icon="fa-table"}
 nyc_squirrels_filtered <- nyc_squirrels_clean %>% 
   select(unique_squirrel_id, date, primary_fur_color, highlight_fur_color, age, running, eating, foraging, indifferent, runs_from)
 
-nyc_squirrels_filtered <- nyc_squirrels_filtered %>% 
-  mutate(running = ifelse(running == TRUE,
-                          as.character(icon("check", lib = "font-awesome")),
-                          as.character(icon("xmark", lib = "font-awesome"))))
 
 
 datatable(nyc_squirrels_filtered,
