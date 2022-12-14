@@ -141,7 +141,7 @@ Column {data-width=200}
   
   - Percentages of each activity.
 
-- Use the `ggiraph` package and change `geom_col()` to `geom_col_interactive()`
+- Use the `ggiraph` package and change `geom_col()` to `geom_col_interactive()`.
 
   - Include the tooltip in the aes() mapping.
 
