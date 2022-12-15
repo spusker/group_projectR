@@ -1,5 +1,5 @@
 ---
-title: "Group Project"
+title: "NYC Squirrels"
 author: "Stephanie Pusker, Mohamed Alhassan, Haiyang Hu"
 date: "2022-12-14"
 output: 
